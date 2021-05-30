@@ -27,4 +27,11 @@ public class Tabuleiro {
 		this.colunas = colunas;
 	}
 	
+	public Peça peça(int linha, int coluna) {
+		return peças [linha][coluna];	
+	}
+	
+	public Peça peça (Posição posição) {
+		return peças [posição.getLinha()][posição.getColuna()];
+	}
 }
