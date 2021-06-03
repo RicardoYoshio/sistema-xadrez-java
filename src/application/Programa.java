@@ -1,6 +1,5 @@
 package application;
 
-
 import Xadrez.PartidaDeXadrez;
 
 public class Programa {
@@ -10,7 +9,7 @@ public class Programa {
 		PartidaDeXadrez partidaDeXadrez = new PartidaDeXadrez();
 		UI.printTabuleiro(partidaDeXadrez.getPeças());
 		
-		
+	
 	}
 
 }
