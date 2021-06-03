@@ -45,6 +45,19 @@ public class Tabuleiro {
 		peça.posição = posição;		
 	}
 	
+	public Peça removePeça(Posição posição) {
+		if (!existePosição(posição)) {
+			throw new ExcessaoTabuleiro("Não existe posição de tabuleiro");
+		}
+		if (peça(posição) == null) {
+			return null;
+		}
+		Peça aux = peça(posição);
+		aux.posição = null;
+		peças[posição.getLinha()][posição.getColuna()] = null;
+		return aux;
+	}
+	
 	private boolean existePosição (int linha, int coluna) {
 		return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
 		
