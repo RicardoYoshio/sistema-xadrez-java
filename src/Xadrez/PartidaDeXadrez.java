@@ -45,6 +45,9 @@ public class PartidaDeXadrez {
 		if (!tabuleiro.haUmaPeça(posição)) {
 			throw new ExcessaoXadrez("Não existe peça na posição de Origem");
 		}
+		if (!tabuleiro.peça(posição). exiteMovimentoPossivel()) {
+			throw new ExcessaoXadrez("Não existe movimentos possiveis para a peça escolhida");
+		}
 	}
 	
 	
