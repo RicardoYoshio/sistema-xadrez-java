@@ -39,6 +39,7 @@ public class Programa {
 					capturada.add(peçaCapturada);
 				}
 			}
+			
 			catch (ExcessaoXadrez e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();	
@@ -46,6 +47,7 @@ public class Programa {
 			catch (InputMismatchException e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
+				
 			}
 	}
 	}
