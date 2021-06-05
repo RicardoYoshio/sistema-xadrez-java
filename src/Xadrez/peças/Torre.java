@@ -24,7 +24,7 @@ public class Torre extends PeçadeXadrez {
 		Posição p = new Posição (0, 0);
 		
 		// above
-		p.setValores(posição.getLinha() -1, posição.getColuna());
+		p.setValores(posição.getLinha() - 1, posição.getColuna());
 		while (getTabuleiro().existePosição(p) && !getTabuleiro().haUmaPeça(p)) {
 			mat[p.getLinha()][p.getColuna()] = true;
 			p.setLinha(p.getLinha() - 1);
@@ -32,6 +32,38 @@ public class Torre extends PeçadeXadrez {
 		if (getTabuleiro().existePosição(p) &&  peçaDoOponente(p)) {
 			mat [p.getLinha()][p.getColuna()] = true;
 		}
+		
+		// left
+		p.setValores(posição.getLinha(), posição.getColuna() - 1);
+		while (getTabuleiro().existePosição(p) && !getTabuleiro().haUmaPeça(p)) {
+			mat[p.getLinha()][p.getColuna()] = true;
+			p.setColuna(p.getColuna() - 1);
+		}
+		if (getTabuleiro().existePosição(p) &&  peçaDoOponente(p)) {
+			mat [p.getLinha()][p.getColuna()] = true;
+				}
+		
+		// left
+		p.setValores(posição.getLinha(), posição.getColuna() + 1);
+		while (getTabuleiro().existePosição(p) && !getTabuleiro().haUmaPeça(p)) {
+			mat[p.getLinha()][p.getColuna()] = true;
+			p.setColuna(p.getColuna() + 1);
+		}
+		if (getTabuleiro().existePosição(p) &&  peçaDoOponente(p)) {
+			mat [p.getLinha()][p.getColuna()] = true;
+		}
+		
+		// below
+		p.setValores(posição.getLinha() + 1, posição.getColuna());
+		while (getTabuleiro().existePosição(p) && !getTabuleiro().haUmaPeça(p)) {
+			mat[p.getLinha()][p.getColuna()] = true;
+			p.setLinha(p.getLinha() + 1);
+		}
+    	if (getTabuleiro().existePosição(p) &&  peçaDoOponente(p)) {
+		    mat [p.getLinha()][p.getColuna()] = true;
+		}
+				
+				
 		return mat;
 	}
 }
