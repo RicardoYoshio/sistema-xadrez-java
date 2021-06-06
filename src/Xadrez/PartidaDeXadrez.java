@@ -102,20 +102,56 @@ public class PartidaDeXadrez {
 			peçasCapturadas.add(peçaCapturada);
 		}
 		
+		// #movimento especial Roque torre do Rei
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+			Posição origemT = new Posição(origem.getLinha(), origem.getColuna() + 3);
+			Posição destinoT = new Posição(origem.getLinha(), origem.getColuna() + 1);
+			PeçadeXadrez torre = (PeçadeXadrez)tabuleiro.removePeça(origemT);
+			tabuleiro.colocarPeça(torre, destinoT);
+			torre.acrescentarMovimentoContagem();
+		}
+		
+		// #movimento especial Roque torre da Rainha
+		if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+			Posição origemT = new Posição(origem.getLinha(), origem.getColuna() -4);
+			Posição destinoT = new Posição(origem.getLinha(), origem.getColuna() - 1);
+			PeçadeXadrez torre = (PeçadeXadrez)tabuleiro.removePeça(origemT);
+			tabuleiro.colocarPeça(torre, destinoT);
+			torre.acrescentarMovimentoContagem();
+		}
+		
 		return peçaCapturada;
 		}
 	
-		private void desfazerMovimento(Posição Origem, Posição Destino, Peça peçaCapturada) {
-			PeçadeXadrez p = (PeçadeXadrez)tabuleiro.removePeça(Destino);
+		private void desfazerMovimento(Posição origem, Posição destino, Peça peçaCapturada) {
+			PeçadeXadrez p = (PeçadeXadrez)tabuleiro.removePeça(destino);
 			p.diminuirMovimentoContagem();
-			tabuleiro.colocarPeça(p, Origem);
+			tabuleiro.colocarPeça(p, origem);
 			
 			if (peçaCapturada != null) {
-				tabuleiro.colocarPeça(peçaCapturada, Destino);
+				tabuleiro.colocarPeça(peçaCapturada, destino);
 				peçasCapturadas.remove(peçaCapturada);
 				peçasNoTabuleiro.add(peçaCapturada);	
 			}
+			
+			// #movimento especial Roque torre do Rei
+			if (p instanceof Rei && destino.getColuna() == origem.getColuna() + 2) {
+				Posição origemT = new Posição(origem.getLinha(), origem.getColuna() + 3);
+				Posição destinoT = new Posição(origem.getLinha(), origem.getColuna() + 1);
+				PeçadeXadrez torre = (PeçadeXadrez)tabuleiro.removePeça(destinoT);
+				tabuleiro.colocarPeça(torre, origemT);
+				torre.diminuirMovimentoContagem();
+			}
+			
+			// #movimento especial Roque torre da Rainha
+			if (p instanceof Rei && destino.getColuna() == origem.getColuna() - 2) {
+				Posição destinoT = new Posição(origem.getLinha(), origem.getColuna() -4);
+				Posição origemT = new Posição(origem.getLinha(), origem.getColuna() - 1);
+				PeçadeXadrez torre = (PeçadeXadrez)tabuleiro.removePeça(destinoT);
+				tabuleiro.colocarPeça(torre, origemT);
+				torre.diminuirMovimentoContagem();
 		}
+	}
 	
 	private void validadePosiçãoOrigem(Posição posição) {
 		if (!tabuleiro.haUmaPeça(posição)) {
@@ -201,7 +237,7 @@ public class PartidaDeXadrez {
 		colocarNovaPeça('h', 1, new Torre(tabuleiro, Cor.BRANCA));
 		colocarNovaPeça('b', 1, new Cavalo(tabuleiro, Cor.BRANCA));
 		colocarNovaPeça('g', 1, new Cavalo(tabuleiro, Cor.BRANCA));
-		colocarNovaPeça('e', 1, new Rei(tabuleiro, Cor.BRANCA));
+		colocarNovaPeça('e', 1, new Rei(tabuleiro, Cor.BRANCA, this));
 		colocarNovaPeça('d', 1, new Rainha(tabuleiro, Cor.BRANCA));
 		colocarNovaPeça('c', 1, new Bispo(tabuleiro, Cor.BRANCA));
 		colocarNovaPeça('f', 1, new Bispo(tabuleiro, Cor.BRANCA));
@@ -218,7 +254,7 @@ public class PartidaDeXadrez {
 		colocarNovaPeça('h', 8, new Torre(tabuleiro, Cor.PRETA));
 		colocarNovaPeça('b', 8, new Cavalo(tabuleiro, Cor.PRETA));
 		colocarNovaPeça('g', 8, new Cavalo(tabuleiro, Cor.PRETA));
-		colocarNovaPeça('e', 8, new Rei(tabuleiro, Cor.PRETA));
+		colocarNovaPeça('e', 8, new Rei(tabuleiro, Cor.PRETA, this));
 		colocarNovaPeça('d', 8, new Rainha(tabuleiro, Cor.PRETA));
 		colocarNovaPeça('f', 8, new Bispo(tabuleiro, Cor.PRETA));
 		colocarNovaPeça('c', 8, new Bispo(tabuleiro, Cor.PRETA));
