@@ -43,7 +43,7 @@ public class Peao extends PeçadeXadrez{
 						mat[p.getLinha()][p.getColuna()] = true;
 				}
 				p.setValores(posição.getLinha() + 2,  posição.getColuna());
-				Posição p2 = new Posição(posição.getLinha() - 1, posição.getColuna());
+				Posição p2 = new Posição(posição.getLinha() + 1, posição.getColuna());
 				if (getTabuleiro().existePosição(p) && !getTabuleiro().haUmaPeça(p) && getTabuleiro().existePosição(p2) && !getTabuleiro().haUmaPeça(p2) && getContadorMovimento() == 0) {
 						mat[p.getLinha()][p.getColuna()] = true;
 				}
