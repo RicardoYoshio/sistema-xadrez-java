@@ -41,7 +41,11 @@ public class Programa {
 				
 				if(partidaDeXadrez.getPromocao() != null) {
 					System.out.print("Entre com a peca promovida (B/C/T/Q: ");
-						String tipo = sc.nextLine();
+						String tipo = sc.nextLine().toUpperCase();
+						while (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("T") && !tipo.equals("Q")) {
+							System.out.print("Valor invalido. Entre com a peca promovida (B/C/T/Q: ");
+							tipo = sc.nextLine().toUpperCase();
+						}
 						partidaDeXadrez.pecaPromovida(tipo);
 				}
 			}
