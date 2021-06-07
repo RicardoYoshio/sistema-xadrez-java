@@ -1,5 +1,6 @@
 package Xadrez;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,8 @@ public class PartidaDeXadrez {
 	private boolean check;
 	private boolean checkMate;
 	private PeçadeXadrez vulneravelEnPassant;
+	private PeçadeXadrez promocao;
+	
 	
 	
 	private List<Peça> peçasNoTabuleiro = new ArrayList<>();
@@ -52,6 +55,10 @@ public class PartidaDeXadrez {
 	
 	public PeçadeXadrez getvulneravelEnPassant() {
 		return vulneravelEnPassant;
+	}
+	
+	public PeçadeXadrez getPromocao() {
+		return promocao;
 	}
 	
 	public PeçadeXadrez[][] getPeças() {
@@ -85,6 +92,17 @@ public class PartidaDeXadrez {
 		
 		PeçadeXadrez peçaMovida = (PeçadeXadrez)tabuleiro.peça(destino);
 		
+		// #movimento especial promoção
+		promocao = null;
+		if(peçaMovida instanceof Peao) {
+			if ((peçaMovida.getCor() == Cor.BRANCA && destino.getLinha() == 0) || (peçaMovida.getCor() == Cor.PRETA && destino.getLinha() == 7)) {
+				promocao = (PeçadeXadrez)tabuleiro.peça(destino);
+				promocao = pecaPromovida("Q");
+				
+			}
+		}
+		
+		
 		check = (testeCheck(oponente(jogadorAtual))) ? true : false;
 		
 		
@@ -103,6 +121,32 @@ public class PartidaDeXadrez {
 			vulneravelEnPassant = null;
 	}
 		return (PeçadeXadrez)peçaCapturada;
+	}
+	
+	public PeçadeXadrez pecaPromovida(String tipo) {
+		if (promocao == null) {
+			throw new IllegalStateException("Não a peca para ser promovida");
+		}
+		if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("T") && !tipo.equals("Q")) {
+			throw new InvalidParameterException("Tipo invalido para promocao");
+		}
+		
+		Posição pos = promocao.getPosicaoXadrez().toPosição();
+		Peça p = tabuleiro.removePeça(pos);
+		peçasNoTabuleiro.remove(p);
+		
+		PeçadeXadrez newPeça = newPeça(tipo, promocao.getCor());
+		tabuleiro.colocarPeça(newPeça, pos);
+		peçasNoTabuleiro.add(newPeça);
+		
+		return newPeça;
+	}
+	
+	private PeçadeXadrez newPeça(String tipo, Cor cor) {
+		if (tipo.equals("B")) return new Bispo (tabuleiro, cor);
+		if (tipo.equals("C")) return new Bispo (tabuleiro, cor);
+		if (tipo.equals("Q")) return new Bispo (tabuleiro, cor);
+		return new Torre(tabuleiro, cor);
 	}
 	
 	private Peça movimentoPeça(Posição origem, Posição destino) {
